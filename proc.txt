@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include<unistd.h>
+int main()
+{
+int a=5,b=10,pid;
+printf("Before fork a=%d b=%d \n",a,b);
+pid=fork();
+if(pid==0)
+{
+a=a+1; b=b+1;
+printf("In child a=%d b=%d \n",a,b);
+}
+else
+{
+sleep(1);
+a=a-1; b=b-1;
+printf("In Parent a=%d b=%d \n",a,b);
+}
+return 0;
+}
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    int a = 5, b = 10, pid;
+    printf("Before vfork a=%d b=%d \n", a, b);
+    pid = vfork();
+    if (pid == 0) {
+        a = a + 1;
+        b = b + 1;
+        printf("In child a=%d b=%d \n", a, b);
+        _exit(0);  // We use _exit instead of return to avoid potential issues with stack usage.
+    } else {
+        sleep(1);
+        a = a - 1;
+        b = b - 1;
+        printf("In Parent a=%d b=%d \n", a, b);
+    }
+    return 0;
+}
+
+
+
